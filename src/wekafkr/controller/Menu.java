@@ -16,6 +16,9 @@ import wekafkr.helper.FileManager;
  * @author fauzanrifqy
  */
 public class Menu {
+    
+    private final String VERSION = "0.1";
+    
     private int selection;
     private Instances instances;
     private static FileManager fileManager;
@@ -25,7 +28,12 @@ public class Menu {
         fileManager = new FileManager();
     }
     
+    public void showVersioning(){
+        System.out.print("#####WEKA FKR v"+VERSION+"#####\n\n");
+    }
+    
     public void askSelection(){
+        showVersioning();
         System.out.print("1. Load File\n");
         System.out.print("2. Show Attributes\n");
         System.out.print("3. Filter\n");
@@ -43,9 +51,11 @@ public class Menu {
     public void goToSelection(){
         switch(selection){
             case 1:
+                showVersioning();
                 instances = fileManager.openFile("data/weather.arff");
                 break;
             case 2:
+                showVersioning();
                 attrManager = new AttributeManager(instances);
                 attrManager.showAttributes();
                 attrManager.selectAttributes();

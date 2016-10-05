@@ -16,10 +16,15 @@ import weka.core.Instances;
 public class AttributeManager {
     
     private int selection;
+    private int selectedAttr;
     private Instances instances;
     
     public AttributeManager(Instances in){
         instances = in;
+    }
+    
+    public void deleteAttributes(int input){
+        instances.deleteAttributeAt(input);
     }
     
     public void selectAttributes(){
@@ -29,9 +34,9 @@ public class AttributeManager {
         
         Scanner in = new Scanner(System.in);
         selection = in.nextInt();
+        selectedAttr = selection;
         
-        showValues(instances.attribute(selection));
-        selectValues();
+        processAttributes(selection);
     }
     
     public void selectValues(){
@@ -42,6 +47,28 @@ public class AttributeManager {
         
         Scanner in = new Scanner(System.in);
         selection = in.nextInt();
+        
+        processValues(selection);
+    }
+    
+    public void processAttributes(int inp){
+        switch(inp){
+            default:
+                showValues(instances.attribute(inp));
+                selectValues();
+                break;
+        }
+    }
+    
+    public void processValues(int inp){
+        switch(inp){
+            case -9:
+                System.out.print("IN\n");
+                deleteAttributes(selectedAttr);
+                break;
+            default:
+                break;
+        }
     }
     
     public void showAttributes(){
