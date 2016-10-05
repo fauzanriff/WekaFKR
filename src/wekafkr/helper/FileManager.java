@@ -21,6 +21,9 @@ public class FileManager {
     Instances data;
     
     public Instances openFile(String path){
+        
+        System.out.println("Load file.....");
+                
         try{
             BufferedReader reader = new BufferedReader(new FileReader(path));
             data = new Instances(reader);

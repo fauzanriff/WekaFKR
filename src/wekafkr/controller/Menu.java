@@ -36,7 +36,6 @@ public class Menu {
         switch(selection){
             case 1:
                 FileManager fileManager = new FileManager();
-                System.out.println("Load file.....");
                 instances = fileManager.openFile("data/weather.arff");
                 showAttributes(instances);
                 break;
