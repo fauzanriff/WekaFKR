@@ -52,7 +52,7 @@ public class Menu {
         switch(selection){
             case 1:
                 showVersioning();
-                instances = fileManager.openFile("data/weather.arff");
+                instances = fileManager.openFile("data/weather_numeric.arff");
                 break;
             case 2:
                 showVersioning();

@@ -15,6 +15,9 @@ import weka.core.Instances;
  */
 public class AttributeManager {
     
+    private final int TYPE_NUMERIC = 0;
+    private final int TYPE_NOMINAL = 1;
+    
     private int selection;
     private int selectedAttr;
     private Instances instances;
@@ -94,10 +97,16 @@ public class AttributeManager {
     }
     
     public void showValues(Attribute attr){
-        System.out.println("Values from "+attr.name()+": ");
-        for(int i=0; i<attr.numValues(); i++){
-            System.out.print(i+"-"+attr.value(i)+"\n");
+        if(attr.isNominal()){
+            System.out.println("Values from "+attr.name()+": ");
+            for(int i=0; i<attr.numValues(); i++){
+                System.out.print(i+"-"+attr.value(i)+"\n");
+            }
+            System.out.print("\n");
+        }else if(attr.isNumeric()){
+            System.out.println("Minimum Values: "+Double.toString(attr.getLowerNumericBound()));
+            System.out.println("Maximum Values: "+Double.toString(attr.getUpperNumericBound()));
         }
-        System.out.print("\n");
+        
     }
 }
