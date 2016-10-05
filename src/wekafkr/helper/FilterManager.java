@@ -15,7 +15,7 @@ import weka.filters.supervised.instance.Resample;
  */
 public class FilterManager {
     
-    public Instances filterResample(Instances input) {
+    public Instances filterResample(Instances input, Double percentage) {
         Instances result = null;
         Resample filter = new Resample();
         
@@ -24,11 +24,11 @@ public class FilterManager {
         try {
             filter.setInputFormat(input);
             filter.setNoReplacement(false);
-            filter.setSampleSizePercent(100);
+            filter.setSampleSizePercent(percentage);
             result = Filter.useFilter(input, filter);
         }
         catch(Exception ex) {
-            System.out.println("Resampling error");
+            System.out.println(ex.getMessage());
         }
         
         return result;
