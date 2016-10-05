@@ -23,17 +23,26 @@ public class AttributeManager {
     private int selectedAttr;
     private Instances instances;
     
-    public AttributeManager(Instances in){
-        instances = in;
+    public AttributeManager(Instances instances){
+        this.instances = instances;
+    }
+    
+     public void showAttributes(){
+        System.out.println("Attributes from " + this.instances.relationName() + ": ");
+        for(int i=0; i < this.instances.numAttributes(); i++){
+            System.out.print(Integer.toString(i) + "-" + this.instances.attribute(i).name() + "\n");
+        }
+        
+        selectAttributes();
     }
     
     public void deleteAttributes(int input){
-        instances.deleteAttributeAt(input);
+        this.instances.deleteAttributeAt(input);
+        showAttributes();
     }
     
     public void selectAttributes(){
-        System.out.print("-1. Back\n\n");
-        
+        System.out.print("\n-1 Cancel\n");
         System.out.print("Select attributes: ");
         
         Scanner in = new Scanner(System.in);
@@ -43,11 +52,28 @@ public class AttributeManager {
         processAttributes(selection);
     }
     
+    public void processAttributes(int input){
+        switch(input){
+            case -1:
+                break;
+            default:
+                if(this.instances.attribute(input).isNominal()) {
+                    showValuesNominal(this.instances.attribute(input), this.instances.attributeStats(input));
+                }
+                else if(this.instances.attribute(input).isNumeric()) {
+                    showValuesNumeric(this.instances.attribute(input), this.instances.attributeStats(input));
+                }
+                
+                selectValues();
+                
+                break;
+        }
+    }
+    
     public void selectValues(){
         System.out.print("-9. Delete Attribute\n");
-        System.out.print("-1. Back\n\n");
-        
-        System.out.print("Select attributes: ");
+        System.out.print("-1. Cancel\n");
+        System.out.print("Action: ");
         
         Scanner in = new Scanner(System.in);
         selection = in.nextInt();
@@ -55,51 +81,16 @@ public class AttributeManager {
         processValues(selection);
     }
     
-    public void processAttributes(int inp){
-        switch(inp){
-            case -1:
-                break;
-            default:
-                if(instances.attribute(inp).isNominal()){
-                    showValuesNominal(instances.attribute(inp), instances.attributeStats(inp));
-                }else if(instances.attribute(inp).isNumeric()){
-                    showValuesNumeric(instances.attribute(inp), instances.attributeStats(inp));
-                }
-                selectValues();
-                
-                break;
-        }
-    }
-    
     public void processValues(int inp){
         switch(inp){
             case -1:
-                showAttributes();
-                selectAttributes();
                 break;
             case -9:
-                System.out.print("IN\n");
                 deleteAttributes(selectedAttr);
                 break;
             default:
                 break;
         }
-    }
-    
-    public void showAttributes(){
-        System.out.println("Attributes from "+instances.relationName()+": ");
-        for(int i=0; i<instances.numAttributes(); i++){
-            System.out.print(Integer.toString(i)+"-"+instances.attribute(i).name()+"\n");
-        }
-        System.out.print("\n");
-    }
-    
-    public void showAttributes(Instances instances){
-        System.out.println("Attributes from "+instances.relationName()+": ");
-        for(int i=0; i<instances.numAttributes(); i++){
-            System.out.print(Integer.toString(i)+"-"+instances.attribute(i).name()+"\n");
-        }
-        System.out.print("\n");
     }
     
     public void showValuesNominal(Attribute attr, AttributeStats attrStats){

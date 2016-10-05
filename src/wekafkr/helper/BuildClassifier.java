@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wekafkr;
+package wekafkr.helper;
 
 import weka.classifiers.trees.J48;
 import weka.core.Instances;

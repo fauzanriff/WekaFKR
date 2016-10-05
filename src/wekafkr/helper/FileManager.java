@@ -9,8 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 import weka.core.Instances;
 
 /**
@@ -18,25 +17,42 @@ import weka.core.Instances;
  * @author fauzanrifqy
  */
 public class FileManager {
-    Instances data;
+    private String filename;
+    private Instances data;
+    private int opt;
     
-    public Instances openFile(String path){
+    public Instances openFile(String filename){
+        
+        this.filename = filename;
+        
+        System.out.println("Default file data/weather_numeric.arff");
+        System.out.println("Put your data on data/ directory");
+        System.out.println("Option (?)");
+        System.out.println("1 Load default file");
+        System.out.println("2 Load your file");
+        System.out.print("\nYour input: ");
+        
+        Scanner scan = new Scanner(System.in);
+        opt = scan.nextInt();
+        
+        if (opt == 2) {
+            System.out.print("Filename: ");
+            this.filename = scan.next();
+        }
         
         System.out.println("Load file.....");
                 
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("data/" + this.filename));
             data = new Instances(reader);
             reader.close();
             System.out.println("Load success");
         } 
-        catch (FileNotFoundException ex){
+        catch (FileNotFoundException ex) {
             System.out.println("Load error, file not found");
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         } 
         catch (IOException ex) {
             System.out.println("Load error, bad I/O");
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return data;
