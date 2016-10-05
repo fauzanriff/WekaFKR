@@ -7,6 +7,7 @@ package wekafkr.helper;
 
 import java.util.Scanner;
 import weka.core.Attribute;
+import weka.core.AttributeStats;
 import weka.core.Instances;
 
 /**
@@ -59,8 +60,13 @@ public class AttributeManager {
             case -1:
                 break;
             default:
-                showValues(instances.attribute(inp));
+                if(instances.attribute(inp).isNominal()){
+                    showValuesNominal(instances.attribute(inp), instances.attributeStats(inp));
+                }else if(instances.attribute(inp).isNumeric()){
+                    showValuesNumeric(instances.attribute(inp), instances.attributeStats(inp));
+                }
                 selectValues();
+                
                 break;
         }
     }
@@ -96,17 +102,20 @@ public class AttributeManager {
         System.out.print("\n");
     }
     
-    public void showValues(Attribute attr){
-        if(attr.isNominal()){
-            System.out.println("Values from "+attr.name()+": ");
-            for(int i=0; i<attr.numValues(); i++){
-                System.out.print(i+"-"+attr.value(i)+"\n");
-            }
-            System.out.print("\n");
-        }else if(attr.isNumeric()){
-            System.out.println("Minimum Values: "+Double.toString(attr.getLowerNumericBound()));
-            System.out.println("Maximum Values: "+Double.toString(attr.getUpperNumericBound()));
+    public void showValuesNominal(Attribute attr, AttributeStats attrStats){
+        System.out.println("Values from "+attr.name()+": ");
+        System.out.println("Type: Nominal");
+        System.out.println(attrStats.toString());
+        for(int i=0; i<attr.numValues(); i++){
+            System.out.print(i+"-"+attr.value(i)+"\n");
         }
+        System.out.print("\n");
         
+    }
+    
+    public void showValuesNumeric(Attribute attr, AttributeStats attrStats){
+        System.out.println("Values from "+attr.name()+": ");
+        System.out.println("Type: Numeric");
+        System.out.println(attrStats.toString());
     }
 }

@@ -64,7 +64,7 @@ public class Menu {
         switch(selection){
             case 1:
                 showVersioning();
-                instances = fileManager.openFile("data/weather.arff");
+                instances = fileManager.openFile("data/weather_numeric.arff");
                 instances.setClassIndex(instances.numAttributes() - 1);
                 attrManager = new AttributeManager(instances);
                 filterManager = new FilterManager();
