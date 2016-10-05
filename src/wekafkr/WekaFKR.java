@@ -5,6 +5,8 @@
  */
 package wekafkr;
 
+import wekafkr.controller.Menu;
+
 /**
  *
  * @author fauzanrifqy
@@ -16,6 +18,12 @@ public class WekaFKR {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        while(true){
+            Menu menu = new Menu();
+            menu.askSelection();
+            menu.goToSelection();
+        }
     }
     
 }
