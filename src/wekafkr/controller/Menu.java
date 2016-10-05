@@ -6,6 +6,7 @@
 package wekafkr.controller;
 
 import java.util.Scanner;
+import weka.core.Attribute;
 import weka.core.Instances;
 import wekafkr.helper.FileManager;
 
@@ -32,16 +33,24 @@ public class Menu {
         selection = in.nextInt();
     }
     
+    public void selectAttributes(){
+        System.out.print("Select attributes: ");
+        
+        Scanner in = new Scanner(System.in);
+        selection = in.nextInt();
+        
+        showValues(instances.attribute(selection));
+    }
+    
     public void goToSelection(){
         switch(selection){
             case 1:
                 FileManager fileManager = new FileManager();
-                System.out.println("Load file.....");
                 instances = fileManager.openFile("data/weather.arff");
-                showAttributes(instances);
                 break;
             case 2:
                 showAttributes(instances);
+                selectAttributes();
                 break;
             default:
                 System.out.print("Please input your selection between number listed above.");
@@ -49,11 +58,19 @@ public class Menu {
         }
     }
     
-    public static void showAttributes(Instances instances){
+    public void showAttributes(Instances instances){
+        System.out.println("Attributes from "+instances.relationName()+": ");
         for(int i=0; i<instances.numAttributes(); i++){
-            System.out.print(Integer.toString(i+1)+". "+instances.attribute(i).name()+"\n");
+            System.out.print(Integer.toString(i)+"-"+instances.attribute(i).name()+"\n");
         }
         System.out.print("\n");
     }
     
+    public void showValues(Attribute attr){
+        System.out.println("Values from "+attr.name()+": ");
+        for(int i=0; i<attr.numValues(); i++){
+            System.out.print(i+"-"+attr.value(i)+"\n");
+        }
+        System.out.print("\n");
+    }
 }
