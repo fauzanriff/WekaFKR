@@ -16,11 +16,13 @@ public class WekaFKR {
     /**
      * @param args the command line arguments
      */
+    
+    private static Menu menu = new Menu();;
+    
     public static void main(String[] args) {
         // TODO code application logic here
         
         while(true){
-            Menu menu = new Menu();
             menu.askSelection();
             menu.goToSelection();
         }
