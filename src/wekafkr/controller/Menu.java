@@ -8,6 +8,7 @@ package wekafkr.controller;
 import java.util.Scanner;
 import weka.core.Attribute;
 import weka.core.Instances;
+import wekafkr.helper.AttributeManager;
 import wekafkr.helper.FileManager;
 
 /**
@@ -15,8 +16,14 @@ import wekafkr.helper.FileManager;
  * @author fauzanrifqy
  */
 public class Menu {
-    private int selection = 0;
+    private int selection;
     private Instances instances;
+    private static FileManager fileManager;
+    private static AttributeManager attrManager;
+    
+    public Menu(){
+        fileManager = new FileManager();
+    }
     
     public void askSelection(){
         System.out.print("1. Load File\n");
@@ -33,44 +40,19 @@ public class Menu {
         selection = in.nextInt();
     }
     
-    public void selectAttributes(){
-        System.out.print("Select attributes: ");
-        
-        Scanner in = new Scanner(System.in);
-        selection = in.nextInt();
-        
-        showValues(instances.attribute(selection));
-    }
-    
     public void goToSelection(){
         switch(selection){
             case 1:
-                FileManager fileManager = new FileManager();
                 instances = fileManager.openFile("data/weather.arff");
                 break;
             case 2:
-                showAttributes(instances);
-                selectAttributes();
+                attrManager = new AttributeManager(instances);
+                attrManager.showAttributes();
+                attrManager.selectAttributes();
                 break;
             default:
                 System.out.print("Please input your selection between number listed above.");
                 break;
         }
-    }
-    
-    public void showAttributes(Instances instances){
-        System.out.println("Attributes from "+instances.relationName()+": ");
-        for(int i=0; i<instances.numAttributes(); i++){
-            System.out.print(Integer.toString(i)+"-"+instances.attribute(i).name()+"\n");
-        }
-        System.out.print("\n");
-    }
-    
-    public void showValues(Attribute attr){
-        System.out.println("Values from "+attr.name()+": ");
-        for(int i=0; i<attr.numValues(); i++){
-            System.out.print(i+"-"+attr.value(i)+"\n");
-        }
-        System.out.print("\n");
     }
 }
