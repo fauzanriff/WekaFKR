@@ -6,6 +6,7 @@
 package wekafkr.controller;
 
 import java.util.Scanner;
+import weka.core.Instances;
 import wekafkr.FileManager;
 
 /**
@@ -14,6 +15,7 @@ import wekafkr.FileManager;
  */
 public class Menu {
     private int selection = 0;
+    private Instances instances;
     
     public void askSelection(){
         System.out.print("1. Load File\n");
@@ -35,7 +37,9 @@ public class Menu {
         switch(selection){
             case 1:
                 FileManager fileManager = new FileManager();
-                fileManager.openFile("data/weather.arff");
+                instances = fileManager.openFile("data/weather.arff");
+                break;
+            case 2:
                 break;
             default:
                 System.out.print("Please input your selection between number listed above.");
