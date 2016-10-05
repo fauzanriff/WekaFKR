@@ -53,6 +53,8 @@ public class AttributeManager {
     
     public void processAttributes(int inp){
         switch(inp){
+            case -1:
+                break;
             default:
                 showValues(instances.attribute(inp));
                 selectValues();
@@ -62,6 +64,10 @@ public class AttributeManager {
     
     public void processValues(int inp){
         switch(inp){
+            case -1:
+                showAttributes();
+                selectAttributes();
+                break;
             case -9:
                 System.out.print("IN\n");
                 deleteAttributes(selectedAttr);
