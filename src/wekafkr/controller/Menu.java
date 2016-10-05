@@ -38,13 +38,22 @@ public class Menu {
                 FileManager fileManager = new FileManager();
                 System.out.println("Load file.....");
                 instances = fileManager.openFile("data/weather.arff");
+                showAttributes(instances);
                 break;
             case 2:
+                showAttributes(instances);
                 break;
             default:
                 System.out.print("Please input your selection between number listed above.");
                 break;
         }
+    }
+    
+    public static void showAttributes(Instances instances){
+        for(int i=0; i<instances.numAttributes(); i++){
+            System.out.print(Integer.toString(i+1)+". "+instances.attribute(i).name()+"\n");
+        }
+        System.out.print("\n");
     }
     
 }
