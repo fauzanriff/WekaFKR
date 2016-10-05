@@ -7,7 +7,7 @@ package wekafkr.controller;
 
 import java.util.Scanner;
 import weka.core.Instances;
-import wekafkr.FileManager;
+import wekafkr.helper.FileManager;
 
 /**
  *
@@ -23,7 +23,6 @@ public class Menu {
         System.out.print("3. Filter\n");
         System.out.print("4. Build Classifier\n");
         System.out.print("5. Testing Model\n\n");
-        
         System.out.print("6. Save Model\n");
         System.out.print("7. Load Model\n\n");
         
@@ -37,6 +36,7 @@ public class Menu {
         switch(selection){
             case 1:
                 FileManager fileManager = new FileManager();
+                System.out.println("Load file.....");
                 instances = fileManager.openFile("data/weather.arff");
                 break;
             case 2:
