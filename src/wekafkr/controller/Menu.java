@@ -9,6 +9,7 @@ import java.util.Scanner;
 import weka.core.Attribute;
 import weka.core.Instances;
 import wekafkr.helper.AttributeManager;
+import wekafkr.helper.BuildClassifier;
 import wekafkr.helper.FileManager;
 import wekafkr.helper.FilterManager;
 
@@ -26,10 +27,12 @@ public class Menu {
     private FileManager fileManager;
     private AttributeManager attrManager;
     private FilterManager filterManager;
+    private BuildClassifier buildClassifier;
     
     public Menu(){
         fileManager = new FileManager();
         filename = "weather_numeric.arff";
+        instances = null;
     }
     
     public boolean stopped() {
@@ -65,31 +68,34 @@ public class Menu {
     }
     
     public void goToSelection(){
+        showVersioning();
         switch(selection){
             case -1: //terminate program
                 break;
             case 1: //load file
-                showVersioning();
-                instances = null;
-                
                 instances = fileManager.openFile(filename); 
                 
                 if (instances != null) {
                     instances.setClassIndex(instances.numAttributes() - 1);
                     attrManager = new AttributeManager(instances);
                     filterManager = new FilterManager();
+                    buildClassifier = new BuildClassifier();
+                }else{
+                    System.out.println("File path isn't recognize, please try again.");
                 }
                 break;
             case 2:
-                showVersioning();
                 attrManager.showAttributes();
                 break;
             case 3:
-                showVersioning();
                 instances = filterManager.filterResample(instances, 50.0);
                 break;
+            case 4:
+                buildClassifier.run(instances);
+                buildClassifier.showResult();
+                break;
             default:
-                System.out.print("Please input your selection between number listed above.");
+                System.out.println("Please input your selection between number listed above.");
                 break;
         }
     }
