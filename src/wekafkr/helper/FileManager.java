@@ -21,25 +21,17 @@ public class FileManager {
     private Instances data;
     private int opt;
     
-    public Instances openFile(String filename){
-        
+    public void askCustomFile(){
         this.filename = filename;
         
-        System.out.println("Default file data/weather_numeric.arff");
-        System.out.println("Put your data on data/ directory");
-        System.out.println("Option (?)");
-        System.out.println("1 Load default file");
-        System.out.println("2 Load your file");
-        System.out.print("\nYour input: ");
+        System.out.print("\nFile path (Under 'data/'): ");
         
         Scanner scan = new Scanner(System.in);
-        opt = scan.nextInt();
-        
-        if (opt == 2) {
-            System.out.print("Filename: ");
-            this.filename = scan.next();
-        }
-        
+        filename = scan.next();
+    }
+    
+    public Instances openFile(String filename){
+        askCustomFile();
         System.out.println("Load file.....");
                 
         try {

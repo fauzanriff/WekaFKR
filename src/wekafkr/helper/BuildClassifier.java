@@ -5,8 +5,11 @@
  */
 package wekafkr.helper;
 
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
 /**
@@ -14,7 +17,9 @@ import weka.core.Instances;
  * @author User
  */
 public class BuildClassifier {
-    private J48 tree;
+    private Classifier tree;
+    private Evaluation eval;
+    private String pathTest;
     
     public void run(Instances inst) {
         try {
@@ -23,6 +28,16 @@ public class BuildClassifier {
             tree = new J48();
             tree.setOptions(options);
             tree.buildClassifier(inst);
+        } catch (Exception ex) {
+            Logger.getLogger(BuildClassifier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void testing(Instances train, Instances test){
+        try {
+            eval = new Evaluation(train);
+            eval.evaluateModel(tree, test);
+            System.out.println(eval.toSummaryString("===Result===\n", false));
         } catch (Exception ex) {
             Logger.getLogger(BuildClassifier.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -100,6 +100,16 @@ public class Menu {
                 buildClassifier.run(instances);
                 buildClassifier.showResult();
                 break;
+            case 5:
+                Instances testInstances = fileManager.openFile(filename);
+                
+                if (testInstances != null) {
+                    testInstances.setClassIndex(testInstances.numAttributes() - 1);
+                }else{
+                    System.out.println("File path isn't recognize, please try again.");
+                }
+                buildClassifier.testing(instances, testInstances);
+                break;
             default:
                 System.out.println("Please input your selection between number listed above.");
                 break;
