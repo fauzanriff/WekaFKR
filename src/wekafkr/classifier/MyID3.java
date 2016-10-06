@@ -19,6 +19,21 @@ public class MyID3 extends Classifier {
     
     private Instances instances;
     
+    /* The node's successors. */ 
+    private MyID3[] successors;
+    
+    /* Class attribute of dataset. */
+    private Attribute classAttribute;
+
+    /* Attribute for splitting. */
+    private Attribute splitAttribute;
+
+    /* Class value if node is leaf */
+    private double classValue;
+
+    /* Class distribution if node is leaf. */
+    private double[] distribution;
+    
     public MyID3() {}
     
     @Override
@@ -44,7 +59,53 @@ public class MyID3 extends Classifier {
         this.instances = new Instances(instances);
         this.instances.deleteWithMissingClass();
         
-        //makeTree(this.instances);
+        buildTree(this.instances);
+    }
+    
+    public void buildTree(Instances instances) throws Exception {
+        
+        // Basis
+        if (instances.numInstances() == 0) {
+            return;
+        }
+        
+        // Recursive
+        double[] informationGains = new double[instances.numAttributes()];
+        for (int i = 0; i < instances.numAttributes(); i++) {
+            Attribute attribute = instances.attribute(i);
+            // Check not class Attribute
+            if (instances.classIndex() != attribute.index()) {
+                informationGains[attribute.index()] = informationGain(attribute, instances);
+            }
+        }
+        
+        // Choose best node
+        splitAttribute = instances.attribute(Utils.maxIndex(informationGains));
+        
+        if (informationGains[splitAttribute.index()] == 0) { // leaf
+            splitAttribute = null;
+            distribution = new double[instances.numClasses()];
+            for (int i = 0; i < instances.numInstances(); i++) {
+                int m_class = (int) instances.instance(i).value(instances.classAttribute());
+                distribution[m_class]++;
+            }
+            
+            Utils.normalize(distribution);
+            classValue = Utils.maxIndex(distribution);
+            classAttribute = instances.classAttribute();
+        }
+        else {
+            // Split data
+            Instances[] data = splitData(splitAttribute, instances);
+            
+            // Define successors
+            successors = new MyID3[data.length];
+            
+            for (int i = 0; i < data.length; i++) {
+                successors[i] = new MyID3();
+                successors[i].buildClassifier(data[i]);
+            }
+        }
     }
     
     public double entropy(Instances instances) {
@@ -87,7 +148,7 @@ public class MyID3 extends Classifier {
         return informationGain;
     }
     
-     public Instances[] splitData(Attribute attribute, Instances instances) {
+    public Instances[] splitData(Attribute attribute, Instances instances) {
         Instances[] split = new Instances[attribute.numValues()];
         
         for (int i = 0; i < attribute.numValues(); i++) {
@@ -100,5 +161,18 @@ public class MyID3 extends Classifier {
         }
         
         return split;
+    }
+    
+     public double classifyInstance(Instance instance){
+        if(splitAttribute == null) { // leaf
+            return classValue;
+        }
+        else { // recursive
+            return successors[(int) instance.value(splitAttribute)].classifyInstance(instance);
+        }
+    }
+     
+    public String toString() {
+        return "Print tree :D";
     }
 }
