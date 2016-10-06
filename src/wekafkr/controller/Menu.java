@@ -22,6 +22,7 @@ public class Menu {
     private final String VERSION = "0.1";
     
     private int selection;
+    private double percentage;
     private String filename;
     private Instances instances;
     private FileManager fileManager;
@@ -88,7 +89,12 @@ public class Menu {
                 attrManager.showAttributes();
                 break;
             case 3:
-                instances = filterManager.filterResample(instances, 50.0);
+                System.out.print("Please input sample sice percent : ");
+                
+                Scanner in = new Scanner(System.in);
+                percentage = in.nextInt();                
+                
+                instances = filterManager.filterResample(instances, percentage);
                 break;
             case 4:
                 buildClassifier.run(instances);
