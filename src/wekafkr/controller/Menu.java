@@ -8,6 +8,7 @@ package wekafkr.controller;
 import java.util.Scanner;
 import weka.core.Attribute;
 import weka.core.Instances;
+import wekafkr.classifier.MyClassifier;
 import wekafkr.helper.AttributeManager;
 import wekafkr.helper.BuildClassifier;
 import wekafkr.helper.FileManager;
@@ -29,6 +30,7 @@ public class Menu {
     private AttributeManager attrManager;
     private FilterManager filterManager;
     private BuildClassifier buildClassifier;
+    private MyClassifier myClassifier = new MyClassifier();
     
     public Menu(){
         fileManager = new FileManager();
@@ -55,7 +57,8 @@ public class Menu {
             System.out.print("4 Build Classifier\n");
             System.out.print("5 Testing Model\n");
             System.out.print("6 Save Model\n");
-            System.out.print("7 Load Model\n\n");
+            System.out.print("7 Load Model\n");          
+            System.out.print("8 Use Classifier\n\n");
         
             System.out.print("Relation: "+instances.relationName()+"\n");
             System.out.print("Instances: "+Integer.toString(instances.numInstances())+"\n");
@@ -68,7 +71,7 @@ public class Menu {
         selection = in.nextInt();
     }
     
-    public void goToSelection(){
+    public void goToSelection() throws Exception{
         showVersioning();
         switch(selection){
             case -1: //terminate program
@@ -109,6 +112,9 @@ public class Menu {
                     System.out.println("File path isn't recognize, please try again.");
                 }
                 buildClassifier.testing(instances, testInstances);
+                break;
+            case 8:
+                myClassifier.run(instances);
                 break;
             default:
                 System.out.println("Please input your selection between number listed above.");

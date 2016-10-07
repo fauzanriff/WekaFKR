@@ -57,7 +57,6 @@ public class MyC45 extends Classifier {
                 Instance inst = i.instance(k);
                 if (inst.isMissing(attr)) {
                     inst.setValue(attr, fillMissingValue(i, attr));
-                    //bisa dituning lagi performancenya
                 }
             }
         }
