@@ -58,7 +58,7 @@ public class Menu {
             System.out.print("5 Testing Model\n");
             System.out.print("6 Save Model\n");
             System.out.print("7 Load Model\n");          
-            System.out.print("8 Use Classifier\n\n");
+            System.out.print("8 Custom Classifier\n\n");
         
             System.out.print("Relation: "+instances.relationName()+"\n");
             System.out.print("Instances: "+Integer.toString(instances.numInstances())+"\n");

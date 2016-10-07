@@ -23,22 +23,25 @@ public class MyClassifier {
             case 1 : 
                 buildC45(instance);
                 break;
-            default:
+            case 2:
                 buildID3(instance);
+                break;
+            default:
                 break;
         }
     }
     
     public static void buildC45(Instances data) throws Exception {
         myc45.buildClassifier(data);
+        System.out.println(myc45.toString());
         System.out.println("memulai prune");
         myc45.prune(data);
         
     }
     
     public static void buildID3(Instances data) throws Exception {
-        myc45.buildClassifier(data);
+        myid3.buildClassifier(data);
+        System.out.println(myid3.toString());
         System.out.println("memulai prune");
-        myc45.prune(data);
     }
 }
