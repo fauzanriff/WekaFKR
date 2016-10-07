@@ -173,6 +173,28 @@ public class MyID3 extends Classifier {
     }
      
     public String toString() {
-        return "Print tree :D";
+        
+        String result = "";
+        
+        if (isLeaf()) {
+            result += ": " + classAttribute.value((int)classValue) + "\n";
+        }
+        else {
+            for (int i = 0; i < splitAttribute.numValues(); i++) {
+     
+                result += splitAttribute.name() + " = " + splitAttribute.value(i);
+                    
+                if (successors[i].isLeaf())
+                    result += successors[i].toString();
+                else
+                    result += "\n" + successors[i].toString();
+            }
+        }
+        
+        return result;
+    }
+    
+    public boolean isLeaf() {
+        return (splitAttribute == null);
     }
 }
