@@ -11,7 +11,7 @@ import weka.core.Instances;
  *
  * @author User
  */
-class PercentageSplit {
+public class PercentageSplit {
     public static void percentageSplit(Instances data, Classifier cls) throws Exception {
         int trainSize = (int) Math.round(data.numInstances() * 0.8);
         int testSize = data.numInstances() - trainSize;

@@ -5,6 +5,7 @@
  */
 package wekafkr.classifier;
 
+import weka.classifiers.Classifier;
 import java.util.Scanner;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -36,7 +37,6 @@ public class MyClassifier {
         System.out.println(myc45.toString());
         System.out.println("memulai prune");
         myc45.prune(data);
-        
     }
     
     public static void buildID3(Instances data) throws Exception {

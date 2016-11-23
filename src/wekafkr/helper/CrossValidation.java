@@ -12,15 +12,15 @@ import weka.classifiers.Evaluation;
 import weka.core.Instances;
 
 public class CrossValidation {
-    public static void crossValidation(Instances data, Classifier cls) throws Exception {
+    public static void crossValidation(Instances data, Classifier cls, int folds) throws Exception {
         Evaluation evaluation = new Evaluation(data);
-        evaluation.crossValidateModel(cls, data, 10, new Random(1));
+        evaluation.crossValidateModel(cls, data, folds, new Random(1));
         System.out.println(evaluation.toSummaryString());
     }
     
-    public static double crossValidationrate(Instances data, Classifier cls) throws Exception {
+    public static double crossValidationrate(Instances data, Classifier cls, int folds) throws Exception {
         Evaluation evaluation = new Evaluation(data);
-        evaluation.crossValidateModel(cls, data, 10, new Random(1));
+        evaluation.crossValidateModel(cls, data, folds, new Random(1));
         return evaluation.pctCorrect();
     }
 }
